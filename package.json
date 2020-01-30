@@ -1,0 +1,21 @@
+{
+  "name": "facebook",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Quoc Anh",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "find-in-files": "^0.5.0",
+    "joi": "^14.3.1",
+    "mongodb": "^3.3.4",
+    "mongoose": "^5.8.9",
+    "nodemon": "^1.19.4"
+  }
+}

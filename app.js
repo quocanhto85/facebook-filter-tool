@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const db = require('./db');
+const db = require('./filter/db');
 // const data = require('./fetch');
 // const dataFetch = data.find({});
 const app = express();

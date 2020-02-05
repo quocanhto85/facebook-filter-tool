@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const db = require('./filter/db');
 const app = express();
+const http = require('http');
 var template = require('./interface/template-main');  
 
 app.use(bodyParser.json());
@@ -14,6 +15,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 // app.get('/', (req, res) => {
 //     res.render('index', {title: 'Fanpage Filter Tool'});
 // });
+
+ app.use(express.static(path.join(__dirname, '/assets')));
 
 exports.get = (req, res) => {
     db.getData("page", (err, getdata) => {
@@ -40,13 +43,17 @@ exports.get = (req, res) => {
     });
 }
 
-app.listen(db.getPort(), () => {
+
+app.get('/', (req, res) => {
+    res.writeHead(200, {
+        'Content-Type': 'text/html'
+    });
+    res.write(template.build("Fanpage", "Displaying data", "Status:"));
+    res.end();
+});
+
+
+app.listen(db.getPort(), () => { // Listening to port
     console.log(`Server running on port ${db.getPort()}`); 
 });
 
-// app.get('/', function(req, res) {
-//     dataFetch.exec((err, data) => {
-//         if(err) throw err;
-//         res.render('index', {title: 'Fanpage Filter Tool', records: data});
-//     });    
-// });

@@ -47,11 +47,50 @@ MongoClient.connect(url, { useUnifiedTopology: true }, (err, db) => {
 });
 
 
-exports.getData = (identify, callback) => {
+// exports.getData = (identify, callback) => {
+//     MongoClient.connect(url, {useUnifiedTopology: true}, (err, db) => {
+        
+//     var mydb = db.db("fanpage");
+//     var col_cmt = mydb.collection('feeds_qa_cmt');
+
+//     var onErr = (err, callback) => {
+//         db.close();
+//         callback(err);
+//     };
+    
+//     mydb.open((err, db) => {
+//         if(!err) {
+//             col_cmt.find({
+//                 "object": identify
+//             }).toArray((err, docs) => {
+//                 if(!err) {
+//                     db.close();
+//                     var intCount = docs.length;
+//                     if(intCount > 0) {
+//                         var strJson = "";
+//                         for(var i = 0; i < intCount; i++) {
+//                             strJson += '{"status":"' + docs[i].status + '"}'
+//                         }
+//                     strJson = '{"object":"' + identify + '","count":' + intCount + ',"status":[' + strJson + "]}"
+//                         callback("", JSON.parse(strJson));
+//                     }
+//                 } else {
+//                     onErr(err, callback);
+//                 }
+//             }); //end collection.find
+//         } else {
+//             onErr(err, callback);
+//         }
+//     }); //end mydb.open
+
+//     });
+// };
+
+const getData = (identify, callback) => {
     MongoClient.connect(url, {useUnifiedTopology: true}, (err, db) => {
         
     var mydb = db.db("fanpage");
-    var col = mydb.collection('feeds_qa');
+    var col_cmt = mydb.collection('feeds_qa_cmt');
 
     var onErr = (err, callback) => {
         db.close();
@@ -60,7 +99,7 @@ exports.getData = (identify, callback) => {
     
     mydb.open((err, db) => {
         if(!err) {
-            col.find({
+            col_cmt.find({
                 "object": identify
             }).toArray((err, docs) => {
                 if(!err) {
@@ -71,7 +110,7 @@ exports.getData = (identify, callback) => {
                         for(var i = 0; i < intCount; i++) {
                             strJson += '{"status":"' + docs[i].status + '"}'
                         }
-                    strJson = '{"object":"' + identify + '","count":' + intCount + ',"status":[' + strJson + ']}'  
+                    strJson = '{"object":"' + identify + '","count":' + intCount + ',"status":[' + strJson + "]}"
                         callback("", JSON.parse(strJson));
                     }
                 } else {
@@ -86,9 +125,8 @@ exports.getData = (identify, callback) => {
     });
 };
 
-
 const getPort = (port) => {
     return port || 3000;
 };
 
-module.exports = { getPort };
+module.exports = { getPort, getData };
